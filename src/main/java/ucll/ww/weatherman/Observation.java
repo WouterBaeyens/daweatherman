@@ -5,10 +5,14 @@
  */
 package ucll.ww.weatherman;
 
+import java.util.Calendar;
+
 /**
  *
  * @author Wouter
  */
-public class Service {
-    
+class Observation {
+    private Calendar time;
+    private String location;
+    private int temperature;
 }
