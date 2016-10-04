@@ -16,6 +16,9 @@ import java.util.Scanner;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -78,16 +81,41 @@ public class DataGetter implements ForecastService {
 
 	@Override
 	public List<Forecast> getForecast(String country, String location) {
-		
+		List<Forecast> forecastList = new ArrayList();
 		try {
-		String json = urlBasis + forecastExtension + country + "/" + location + ".json";
-			JsonNode info = getInfo(json);
-			
+                    String json = urlBasis + forecastExtension + country + "/" + location + ".json";
+                    JsonNode info = getInfo(json);
+                    ArrayNode textForecasts = (ArrayNode) info.get("forecast").get("txt_forecast").get("forecastday");
+                    ArrayNode simpelForecasts = (ArrayNode) info.get("forecast").get("simpleforecast").get("forecastday");
+                    
+                    Iterator<JsonNode> forecastsIterator = textForecasts.elements();
+                    Iterator<JsonNode> simpleForecastsIterator = simpelForecasts.elements();
+                    
+                    while (forecastsIterator.hasNext() && simpleForecastsIterator.hasNext()) {
+                        JsonNode forecastNodeDay = forecastsIterator.next();
+                        JsonNode forecastNodeNight = forecastsIterator.next();
+                        JsonNode simpleForecastNode = simpleForecastsIterator.next();
+                        
+                        String textDay = forecastNodeDay.get("fcttext_metric").asText();
+                        String textNight = forecastNodeNight.get("fcttext_metric").asText();
+                        
+                        long epoch = simpleForecastNode.get("date").get("epoch").asLong();
+                        LocalDate date = Instant.ofEpochSecond(epoch).atZone(ZoneId.systemDefault()).toLocalDate();
+                        JsonNode maxTemp1 = simpleForecastNode.get("high");
+                        double maxTemp = maxTemp1.get("celsius").asDouble();
+                        
+                        Forecast f = new Forecast();
+                        f.setTextForecastDay(textDay);
+                        f.setTextForecastNight(textNight);
+                        f.setMaximumTemperature(maxTemp);
+                        f.setDate(date);
+                        System.out.println(f);
+                        forecastList.add(f);
+                    }   
 		} catch (IOException e) {
 			return null;
 		}
-		
-		throw new UnsupportedOperationException("Not supported yet.");
+		return forecastList;
 	}
 
 }
