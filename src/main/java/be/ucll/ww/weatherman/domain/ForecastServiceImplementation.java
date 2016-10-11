@@ -30,18 +30,16 @@ public class ForecastServiceImplementation implements ForecastService {
 		Observation observation = null;
 		try {
 			observation = database.getObservation(country, location);
-			if (!observation.getDate().isBefore(LocalDate.now()))
-				return observation;
+			if (observation.getDate().isBefore(LocalDate.now()))
+				throw new FailedAccessException();
 		} catch (FailedAccessException e) {
-		} finally {
 			try {
 				observation = remoteDataPoint.getObservation(country, location);
 				database.storeObservation(country, location, observation);
-			} catch (FailedAccessException e) {
-				e.printStackTrace();
+			} catch (FailedAccessException e1) {
+				e1.printStackTrace();
 			}
 		}
-
 		return observation;
 	}
 
