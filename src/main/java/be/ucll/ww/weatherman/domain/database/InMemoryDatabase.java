@@ -4,13 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import be.ucll.ww.weatherman.domain.model.FailedAccessException;
 import be.ucll.ww.weatherman.domain.model.Forecast;
 import be.ucll.ww.weatherman.domain.model.Observation;
 
+@ApplicationScoped
 public class InMemoryDatabase implements Database {
 	private Map<String, Map<String, Observation>> observations;
 	private Map<String, Map<String, List<Forecast>>> forecasts;
+
+	public InMemoryDatabase() {
+		observations = new HashMap<>();
+		forecasts = new HashMap<>();
+	}
 
 	@Override
 	public Observation getObservation(String country, String location) throws FailedAccessException {
@@ -36,12 +44,6 @@ public class InMemoryDatabase implements Database {
 		if (!map.containsKey(country))
 			map.put(country, new HashMap<>());
 		map.get(country).put(location, t);
-	}
-
-	@Override
-	public void initialize() {
-		observations = new HashMap<>();
-		forecasts = new HashMap<>();
 	}
 
 	@Override

@@ -3,26 +3,24 @@ package be.ucll.ww.weatherman.domain;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import be.ucll.ww.weatherman.domain.database.Database;
 import be.ucll.ww.weatherman.domain.model.FailedAccessException;
 import be.ucll.ww.weatherman.domain.model.Forecast;
 import be.ucll.ww.weatherman.domain.model.Observation;
 import be.ucll.ww.weatherman.domain.model.WeatherDataRetriever;
 
+@ApplicationScoped
 public class ForecastServiceImplementation implements ForecastService {
-
+	@Inject
 	private WeatherDataRetriever remoteDataPoint;
+	@Inject
 	private Database database;
-
-	public ForecastServiceImplementation(WeatherDataRetriever remoteDataPoint, Database database) {
-		this.remoteDataPoint = remoteDataPoint;
-		this.database = database;
-		loadWeather();
-	}
 
 	@Override
 	public void loadWeather() {
-		database.initialize();
 	}
 
 	@Override

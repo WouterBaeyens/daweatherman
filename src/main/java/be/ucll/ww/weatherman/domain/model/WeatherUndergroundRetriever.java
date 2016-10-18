@@ -6,7 +6,6 @@
 package be.ucll.ww.weatherman.domain.model;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -14,7 +13,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
+
+import javax.enterprise.context.ApplicationScoped;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  *
  * @author Wouter
  */
+@ApplicationScoped
 public class WeatherUndergroundRetriever implements WeatherDataRetriever {
 	// user: wouter35 (not used)
 	// key: 3e758fde9069c39c
@@ -47,11 +48,6 @@ public class WeatherUndergroundRetriever implements WeatherDataRetriever {
 
 	private JsonNode getInfo(String url) throws IOException {
 		URL u = new URL(url);
-		InputStream response = u.openStream();
-		try (Scanner scanner = new Scanner(response)) {
-			String responseBody = scanner.useDelimiter("\\A").next();
-			// System.out.println(responseBody);
-		}
 		return new ObjectMapper().readTree(u.openStream());
 	}
 
