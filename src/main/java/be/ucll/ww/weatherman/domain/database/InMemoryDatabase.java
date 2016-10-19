@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 
 import be.ucll.ww.weatherman.domain.model.FailedAccessException;
 import be.ucll.ww.weatherman.domain.model.Forecast;
 import be.ucll.ww.weatherman.domain.model.Observation;
 
 @ApplicationScoped
+@Default
 public class InMemoryDatabase implements Database {
 	private Map<String, Map<String, Observation>> observations;
 	private Map<String, Map<String, List<Forecast>>> forecasts;

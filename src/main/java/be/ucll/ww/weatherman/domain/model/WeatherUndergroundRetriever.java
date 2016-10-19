@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  * @author Wouter
  */
 @ApplicationScoped
+@Default
 public class WeatherUndergroundRetriever implements WeatherDataRetriever {
 	// user: wouter35 (not used)
 	// key: 3e758fde9069c39c

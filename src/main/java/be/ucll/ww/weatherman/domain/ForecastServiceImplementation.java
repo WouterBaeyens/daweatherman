@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 
 import be.ucll.ww.weatherman.domain.database.Database;
@@ -13,6 +14,7 @@ import be.ucll.ww.weatherman.domain.model.Observation;
 import be.ucll.ww.weatherman.domain.model.WeatherDataRetriever;
 
 @ApplicationScoped
+@Default
 public class ForecastServiceImplementation implements ForecastService {
 	@Inject
 	private WeatherDataRetriever remoteDataPoint;
