@@ -3,8 +3,8 @@ package be.ucll.ww.weatherman.domain;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Default;
+import javax.ejb.Schedule;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import be.ucll.ww.weatherman.domain.database.Database;
@@ -13,13 +13,18 @@ import be.ucll.ww.weatherman.domain.model.Forecast;
 import be.ucll.ww.weatherman.domain.model.Observation;
 import be.ucll.ww.weatherman.domain.model.WeatherDataRetriever;
 
-@ApplicationScoped
-@Default
+@Stateless
 public class ForecastServiceImplementation implements ForecastService {
 	@Inject
 	private WeatherDataRetriever remoteDataPoint;
 	@Inject
 	private Database database;
+
+	@Schedule(minute = "*/1")
+	public void refreshSanFranData() {
+		System.out.println(getCurrentObservation("CA", "San_Francisco"));
+		System.out.println(getForecast("CA", "San_Francisco"));
+	}
 
 	@Override
 	public void loadWeather() {

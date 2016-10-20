@@ -7,6 +7,8 @@ package be.ucll.ww.weatherman.domain;
 
 import java.util.List;
 
+import javax.ejb.Remote;
+
 import be.ucll.ww.weatherman.domain.model.Forecast;
 import be.ucll.ww.weatherman.domain.model.Observation;
 
@@ -14,10 +16,11 @@ import be.ucll.ww.weatherman.domain.model.Observation;
  *
  * @author Wouter
  */
+@Remote
 public interface ForecastService {
-    public void loadWeather();
-    
-    public Observation getCurrentObservation(String country, String location);
-    
-    public List<Forecast> getForecast(String country, String location);
+	public void loadWeather();
+
+	public Observation getCurrentObservation(String country, String location);
+
+	public List<Forecast> getForecast(String country, String location);
 }
