@@ -7,6 +7,7 @@ package be.ucll.ww.weatherman.domain;
 
 import java.util.List;
 
+import javax.ejb.Local;
 import javax.ejb.Remote;
 
 import be.ucll.ww.weatherman.domain.model.Forecast;
@@ -16,7 +17,7 @@ import be.ucll.ww.weatherman.domain.model.Observation;
  *
  * @author Wouter
  */
-@Remote
+@Local
 public interface ForecastService {
 	public void loadWeather();
 
