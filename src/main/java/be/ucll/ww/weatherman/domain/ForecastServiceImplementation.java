@@ -20,7 +20,7 @@ public class ForecastServiceImplementation implements ForecastService {
 	@Inject
 	private Database database;
 
-	@Schedule(minute = "*/1")
+	@Schedule(hour = "*", minute="*/1")
 	public void refreshSanFranData() {
 		System.out.println(getCurrentObservation("CA", "San_Francisco"));
 		System.out.println(getForecast("CA", "San_Francisco"));
